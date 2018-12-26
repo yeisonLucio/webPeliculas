@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Lista de productos</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for producto in productos %}
+            <tr>
+                <td><a href="{{ path('producto_show', { 'id': producto.id }) }}">{{ producto.id }}</a></td>
+                <td>{{ producto.codigo }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.descripcion }}</td>
+                <td>{{ producto.cantidad }}</td>
+                <td>{{ producto.precio }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('producto_show', { 'id': producto.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('producto_edit', { 'id': producto.id }) }}">edit</a>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="valor" value="{{producto.id}}">
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('producto_new') }}">Create a new producto</a>
+        </li>
+    </ul>
+    <hr/>  
+    <h1>Carrito compras</h1>
+    <div id="contenedor_carrito">
+        <table border="2">
+            <thead>
+                <tr>
+                   <th>Codigo</th>
+                   <th>Nombre</th>
+                   <th>Descripcion</th>
+                   <th>Cantidad</th>
+                   <th>Precio</th>
+               </tr>
+            </thead>
+            <tbody id="tbody">
+                
+               
+            </tbody>
+        </table>
+        
+
+    </div>
+            
+    <script>
+       
+        $(function(){
+            
+            $(".valor").on( 'change', function() {
+                
+                if( $(this).is(':checked') ) {
+                     $id = $(this).val();
+                    alert($id);
+                   $.ajax({
+                       
+                        url: "{{ path('producto_buscarProducto') }}",
+                        type: 'POST',
+                        async: true,
+                        data: {
+                            id: $id
+                        },
+                        success: function(respuesta){
+                            $.each(respuesta, function (index, value) {
+                                console.log(""+respuesta.nombre);
+                              $("#tbody").append("<tr>td>"+respuesta.nombre+"</td></tr>");
+                                
+                                
+                        });
+                        
+                        },
+                        error: function(error){
+                            alert(error);
+                        }
+                    
+                    });
+                   
+    
+            }
+          
+        });           
+            
+            
+            
+        });
+                
+    </script>
+     
+{% endblock %}

@@ -1,0 +1,12 @@
+#!bin/bash
+
+
+var=/home/lucio/Aplicaciones
+cd $var
+
+
+
+
+
+
+

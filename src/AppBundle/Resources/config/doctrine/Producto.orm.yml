@@ -1,0 +1,25 @@
+AppBundle\Entity\Producto:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\ProductoRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        codigo:
+            type: integer
+            unique: true
+        nombre:
+            type: string
+            length: 255
+        descripcion:
+            type: string
+            length: 255
+        cantidad:
+            type: integer
+        precio:
+            type: integer
+    lifecycleCallbacks: {  }
